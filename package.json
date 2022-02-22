@@ -7,8 +7,8 @@
   "scripts": {
     "test": "jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config",
     "test:watch": "npm run test -- --watch",
-    "start": "node -r dotenv/config build/server.js",
-    "start:watch": "nodemon -r dotenv/config build/server.js",
+    "start": "node -r dotenv/config dist/server.js",
+    "start:watch": "nodemon -r dotenv/config dist/server.js",
     "setup-db": "node -r dotenv/config setup-db.js",
     "build" : "npx tsc",
     "build:watch" : "npx tsc -w",

@@ -1,5 +1,5 @@
 import { Application } from 'express';
-const express = require('express');
+import express from 'express';
 
 const app: Application = express();
 

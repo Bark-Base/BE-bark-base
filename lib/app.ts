@@ -1,6 +1,7 @@
-const express = require('express');
+import { Application } from 'express';
+import express from 'express';
 
-const app = express();
+const app: Application = express();
 
 // Built in middleware
 app.use(express.json());

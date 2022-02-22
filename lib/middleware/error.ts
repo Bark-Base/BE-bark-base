@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-module.exports = (err, req, res, next) => {
+
+import {  Request, Response, NextFunction } from 'express';
+module.exports = (err:any, req:Request, res:Response, next: NextFunction) => {
   const status = err.status || 500;
 
   res.status(status);

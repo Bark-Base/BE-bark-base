@@ -7,9 +7,10 @@
   "scripts": {
     "test": "jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config",
     "test:watch": "npm run test -- --watch",
-    "start": "node -r dotenv/config server.js",
-    "start:watch": "nodemon -r dotenv/config server.js",
+    "start": "node -r dotenv/config build/server.js",
+    "start:watch": "nodemon -r dotenv/config build/server.js",
     "setup-db": "node -r dotenv/config setup-db.js",
+    "build" : "npx tsc",
     "setup-heroku": "heroku run npm run setup-db"
   },
   "jest": {

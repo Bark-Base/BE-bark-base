@@ -12,7 +12,7 @@ module.exports = Router()
   try { 
     const secrets = 'Hello World'
     res.send(secrets);
-  } catch (error) {
+  } catch (error:any) {
     next(error);
   }
 })

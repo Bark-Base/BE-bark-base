@@ -12,8 +12,7 @@
     "setup-db": "node -r dotenv/config dist/setup-db.js",
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
-    "setup-heroku": "heroku run npm run setup-db",
-    "postinstall": "npx tsc && mv -i -v sql dist/"
+    "setup-heroku": "heroku run npm run setup-db"
   },
   "jest": {
     "testEnvironment": "node"

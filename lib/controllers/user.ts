@@ -7,18 +7,11 @@ const UserService = require('../services/UserService')
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
-.get('/', async (req:Request, res:Response, next:NextFunction) => {
-    
-  try { 
-    
-    res.send('Heya');
-  } catch (error:any) {
-    next(error);
-  }
-})
 .post('/', async (req:Request, res:Response, next:NextFunction) => {
+  console.log(req.body)
+  const {email, password, secretAnswer} = req.body;
   try {
-    const user = await UserService.create(req.body);
+    const user = await UserService.create({email,password, secretAnswer});
     res.json(user);
   } catch (error) {
     next(error);

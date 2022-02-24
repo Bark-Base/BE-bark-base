@@ -1,2 +1,2 @@
-web: npm run build
-web: mv -i -v sql dist/
+web: dotenv/config dist/server.js
+web: 

@@ -8,7 +8,6 @@ const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
 .post('/', async (req:Request, res:Response, next:NextFunction) => {
-  console.log(req.body)
   const {email, password, secretAnswer} = req.body;
   try {
     const user = await UserService.create({email,password, secretAnswer});

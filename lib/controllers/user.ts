@@ -10,8 +10,8 @@ module.exports = Router()
 .get('/', async (req:Request, res:Response, next:NextFunction) => {
     
   try { 
-    const secrets = 'Hello World'
-    res.send(secrets);
+    
+    res.send('Heya');
   } catch (error:any) {
     next(error);
   }

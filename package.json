@@ -13,7 +13,7 @@
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
     "setup-heroku": "heroku run npm run setup-db",
-    "postinstall" : "mv -i -v sql dist/data"
+    "postinstall" : "mv -i -v sql dist/"
   },
   "jest": {
     "testEnvironment": "node"

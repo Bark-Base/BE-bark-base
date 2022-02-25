@@ -2,7 +2,8 @@ const { Router } = require('express');
 const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/authenticate');
 import {  Request, Response, NextFunction } from 'express';
-const UserService = require('../services/UserService')
+const UserService = require('../services/UserService');
+const User = require('../models/User')
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -28,6 +29,7 @@ module.exports = Router()
 .post('/session', async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { email, password } = req.body;
+    const user = await User.getByEmail(email);
     const sessionToken = await UserService.signIn({ email, password });
 
     res   
@@ -35,14 +37,14 @@ module.exports = Router()
         httpOnly: true,
         maxAge: ONE_DAY,
       })
-      .json({ message: 'Signed in successfully!' });
+      .json({ message: 'Signed in successfully!', user });
          
   } catch (error) {
     next(error);
   }
 })
 
-  .delete('/sessions', (req:Request, res:Response) => {
+  .delete('/session', (req:Request, res:Response) => {
     res
       .clearCookie(process.env.COOKIE_NAME as string)
       .json({ success: true, message: 'Signed out successfully!' });

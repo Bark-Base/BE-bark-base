@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 
 export const setup = (pool:any) => {
   return fs
-    .readFile(`${__dirname}/sql/setup.sql`, { encoding: 'utf-8' })
+    .readFile(`${__dirname}/../sql/setup.sql`, { encoding: 'utf-8' })
     .then((sql:any) => pool.query(sql))
     .then(() => console.log('✅ Database setup complete!'))
     .catch((error:any) => {

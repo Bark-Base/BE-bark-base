@@ -8,15 +8,22 @@ const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
 .post('/', async (req:Request, res:Response, next:NextFunction) => {
-  const {email, password, secretAnswer} = req.body;
+  const { email, password  } = req.body;
   try {
-    const user = await UserService.create({email,password, secretAnswer});
-    res.json(user);
+    const user = await UserService.create({ email, password });
+    const sessionToken = await UserService.signIn({ email, password });
+
+    res   
+      .cookie(process.env.COOKIE_NAME as string, sessionToken, {
+        httpOnly: true,
+        maxAge: ONE_DAY,
+      })
+      .json({ message: 'Signed in successfully!' });
   } catch (error) {
     next(error);
   }
 })
-.post('/sessions', async (req:Request, res:Response, next:NextFunction) => {
+.post('/', async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { email, password } = req.body;
     const sessionToken = await UserService.signIn({ email, password });

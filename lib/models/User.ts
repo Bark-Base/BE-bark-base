@@ -3,28 +3,25 @@ import { pool } from '../utils/pool';
 module.exports = class User {
   id;
   email;
-  #secretHash;
   #passwordHash;
 
   constructor(row:any) {
     this.id = row.id;
     this.email = row.email;
     this.#passwordHash = row.password_hash;
-    this.#secretHash = row.secret_hash;
   }
 
-  static async insert({ email, passwordHash, secretHash}: {
+  static async insert({ email, passwordHash }: {
     email: string;
-    passwordHash: string;
-    secretHash: string;
-}): Promise<User> {
+    passwordHash: any;
+}) {
     const { rows } = await pool.query(
       `
-        INSERT INTO users ( email, password_hash, secret_hash)
-        VALUES ($1, $2, $3)
+        INSERT INTO users ( email, password_hash)
+        VALUES ($1, $2)
         RETURNING *
       `,
-      [ email, passwordHash, secretHash]
+      [ email, passwordHash ]
     );
     return new User(rows[0]);
   }
@@ -44,7 +41,5 @@ module.exports = class User {
   get passwordHash() {
     return this.#passwordHash;
   }
-  get secretHash() {
-    return this.#secretHash;
-  }
+  
 };

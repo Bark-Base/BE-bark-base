@@ -3,26 +3,23 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 module.exports = class UserService {
-  static async create({ email, password, secretAnswer }: {email:string, password:string, secretAnswer:string}) {
+  static async create({ email, password }: {email:string, password:any, }) {
+      
     const passwordHash = await bcrypt.hash(
       password, 
       Number(process.env.SALT_ROUNDS)
 
     );
-    const secretHash = await bcrypt.hash(
-        secretAnswer, 
-        Number(process.env.SALT_ROUNDS)
-      );
-
+    
     const user = await User.insert({
       email,
       passwordHash,
-      secretHash,
+      
     });
     return user;
   }
 
-  static async signIn({ email, password = '' } :{email:string, password:string }) {
+  static async signIn({ email, password } : {email:string, password:any }) {
     try {
       const user = await User.getByEmail(email);
 

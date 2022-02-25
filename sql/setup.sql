@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users, pets;
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     password_hash TEXT NOT NULL,
-    secret_hash TEXT NOT NULL,
+    secret_hash TEXT,
     email TEXT NOT NULL
 );
 INSERT INTO users (password_hash, secret_hash, email)

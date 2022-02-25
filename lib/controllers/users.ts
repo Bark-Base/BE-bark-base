@@ -14,16 +14,18 @@ module.exports = Router()
     const sessionToken = await UserService.signIn({ email, password });
 
     res   
-      .cookie(process.env.COOKIE_NAME as string, sessionToken, {
+      .cookie(process.env.COOKIE_NAME as string, sign(sessionToken), {
         httpOnly: true,
         maxAge: ONE_DAY,
+        signed: true,
       })
-      .json({ message: 'Signed in successfully!' });
+      .json({ message: 'Signed in successfully!' , user});
+      
   } catch (error) {
     next(error);
   }
 })
-.post('/', async (req:Request, res:Response, next:NextFunction) => {
+.post('/session', async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { email, password } = req.body;
     const sessionToken = await UserService.signIn({ email, password });

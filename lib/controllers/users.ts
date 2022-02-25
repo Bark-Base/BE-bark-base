@@ -16,9 +16,10 @@ module.exports = Router()
 
     res   
       .cookie(process.env.COOKIE_NAME as string, sessionToken, {
+        secure: process.env.NODE_ENV !== 'development',
         httpOnly: true,
         maxAge: ONE_DAY,
-        
+        sameSite: 'none'
       })
       .json({ message: 'Signed in successfully!' , user});
       

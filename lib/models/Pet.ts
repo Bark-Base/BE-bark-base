@@ -43,7 +43,7 @@ module.exports = class Pet {
 
   static async updateById(id:any, { name, birthday, imageUrl}:{ name:any, birthday:any, imageUrl:any}) {
     const { rows } = await pool.query(
-      'UPDATE reviewers SET name = $1, birthday = $2 WHERE id = $3 RETURNING *',
+      'UPDATE pets SET name = $1, birthday = $2, imageUrl = $3 WHERE id = $4 RETURNING *',
       [ name, birthday, imageUrl, id]
     );
     return new Pet(rows[0]);
@@ -51,7 +51,7 @@ module.exports = class Pet {
 
   static async deleteById(id: any) {
     const { rows } = await pool.query(
-      'DELETE FROM reviewers WHERE id = $1 RETURNING *;',
+      'DELETE FROM pets WHERE id = $1 RETURNING *;',
       [id]
     );
     if (!rows[0]) return null;

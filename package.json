@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engines": {
     "node": "16.13.0"
-    },
+  },
   "description": "",
   "main": "dist/server.js",
   "type": "commonjs",
@@ -16,7 +16,7 @@
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
     "setup-heroku": "heroku run npm run setup-db",
-    "postbuild": "mv -i -v sql dist/"
+    "postbuild": "cp -r sql dist/"
   },
   "jest": {
     "testEnvironment": "node"
@@ -42,6 +42,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.0",
     "@types/jsonwebtoken": "^8.5.8",
@@ -49,6 +50,7 @@
     "@types/pg": "^8.6.4",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.5",
     "dotenv": "^14.2.0",

@@ -17,7 +17,7 @@ module.exports = Router()
       .cookie(process.env.COOKIE_NAME as string, sessionToken, {
         httpOnly: true,
         maxAge: ONE_DAY,
-        signed: true,
+        
       })
       .json({ message: 'Signed in successfully!' , user});
       

@@ -14,7 +14,7 @@ module.exports = Router()
     const sessionToken = await UserService.signIn({ email, password });
 
     res   
-      .cookie(process.env.COOKIE_NAME as string, sign(sessionToken), {
+      .cookie(process.env.COOKIE_NAME as string, sessionToken, {
         httpOnly: true,
         maxAge: ONE_DAY,
         signed: true,

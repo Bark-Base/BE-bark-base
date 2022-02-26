@@ -18,6 +18,8 @@ app.use(cors({
 // App routes
 app.use('/api/v1/auth', require('./controllers/users'));
 app.use('/api/v1/pet', require('./controllers/pets'));
+app.use('/api/v1/contact', require('./controllers/contacts'));
+app.use('/api/v1/medical-info', require('./controllers/medical'));
 
 // Error handling & 404 middleware for when
 // a request doesn't match any app routes

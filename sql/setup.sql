@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, pets, contacts;
+DROP TABLE IF EXISTS users, pets, contacts, medical_info;
 
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -31,4 +31,16 @@ CREATE TABLE contacts (
     pet_id BIGINT REFERENCES pets(id)
 );
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('vet','bob',555-555-5555,'@gmail.com','123 fake st.',1,1)
+VALUES('vet','bob',555-555-5555,'@gmail.com','123 fake st.',1,1);
+
+CREATE TABLE medical_info (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    vet_id BIGINT REFERENCES contacts(id),
+    medicines VARCHAR(30), 
+    notes VARCHAR(2000),
+    next_appt DATE,
+    pet_id BIGINT REFERENCES pets(id)
+);
+
+INSERT INTO medical_info (vet_id, medicines, notes, next_appt, pet_id)
+VALUES('1','scotch','Take twice hourly', '2022-02-02', 1 )

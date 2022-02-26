@@ -14,24 +14,17 @@ module.exports = Router()
     next(error);
   }
 })
-.get('/', authenticate, async (req:Request, res:Response, next:NextFunction) => {
-    
+.get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
+    //for the get all contacts method the id should be the users(id)
+    const { id } = req.params;
     try { 
-      const contacts = await Contact.getAll();
+      const contacts = await Contact.getAll(id);
       res.send(contacts);
     } catch (error) {
       next(error);
     }
   })
- .get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
-    const { id } = req.params;
-    try { 
-      const contact = await Contact.get(id);
-      res.send(contact);
-    } catch (error) {
-      next(error);
-    }
-  })
+
   .patch('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
     const { id } = req.params;
        

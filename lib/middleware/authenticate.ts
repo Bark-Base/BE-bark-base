@@ -1,7 +1,7 @@
 import  jwt  from 'jsonwebtoken';
 import {  Request, Response, NextFunction } from 'express';
 
-module.exports = async (req:Request, res:Response, next:NextFunction) => {
+module.exports = async (req:any, res:Response, next:NextFunction) => {
   try {
     const cookie:string = req.cookies[process.env.COOKIE_NAME as string];
     // Check the httpOnly session cookie for the current user
@@ -9,7 +9,7 @@ module.exports = async (req:Request, res:Response, next:NextFunction) => {
 
     // Verify the JWT token stored in the cookie, then attach to each request
     const user: string | jwt.JwtPayload = jwt.verify(cookie, process.env.JWT_SECRET as string);
-    req.body = user;
+    req.user = user;
 
     next();
   } catch (err:any) {

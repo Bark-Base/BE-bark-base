@@ -34,17 +34,6 @@ module.exports = class Pet {
     return rows.map((row) => new Pet(row));
   }
 
-  static async getById(id:any) {
-    const { rows } = await pool.query(
-      `SELECT FROM contacts
-       WHERE id=$1`,
-      [id]
-    );
-
-    if (!rows[0]) return null;
-    return new Pet(rows[0]);
-  }
-
   static async updateById(id:any, { name, type, phone, email, address, ownerId, petId}:{ name:any, type:any, phone:any, email:any, address:any, ownerId:any, petId:any}) {
     const { rows } = await pool.query(
       'UPDATE contacts SET name = $1, type = $2, phone = $3, email= $4, address = $5, owner_id = $6, pet_id = $7, WHERE id = $8 RETURNING *',

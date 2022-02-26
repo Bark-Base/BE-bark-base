@@ -27,6 +27,15 @@ module.exports = Router()
     next(error);
   }
 })
+.get('/user', authenticate,  async (req:any, res:Response, next:NextFunction) => {
+  try {
+    const { user } = req;
+    res.json(user)
+  } catch (error) {
+    next(error);
+  }
+})
+
 .post('/session', async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { email, password } = req.body;

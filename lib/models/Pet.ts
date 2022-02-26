@@ -25,8 +25,8 @@ module.exports = class Pet {
     return new (rows[0]);
   }
 
-  static async getAll(id: any) {
-    const { rows } = await pool.query('SELECT * FROM Pets');
+  static async getAll(ownerId: any) {
+    const { rows } = await pool.query('SELECT * FROM Pets WHERE id=$1', [ownerId]);
     return rows.map((row) => new Pet(row));
   }
 

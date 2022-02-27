@@ -28,15 +28,18 @@ module.exports = class Pet {
     );
     return new Pet(rows[0]);
   }
-
   static async getAll(ownerId: any) {
+    // selects all pet_id on owner_id 
     const { rows } = await pool.query(
       `SELECT pet_id FROM pets WHERE owner_id=$1`,
       [ownerId]
-    );
+      );
+      // maps over pet array by owner 
     const ownersPets = rows.map((row) => new Pet(row));
+    // munges previous array for pet_id
     const ownerPetsArray = ownersPets.map((item)=> item.id);
     const newArr = [];
+    // loops through array of pet ids and returns a new instance of Pet.getById()
     for(let petId of ownerPetsArray){
       newArr.push(await this.getById(petId));
     }

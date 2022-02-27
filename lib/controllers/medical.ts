@@ -1,14 +1,14 @@
-const { Router } = require('express');
-const authenticate = require('../middleware/authenticate');
+import { Router } from 'express';
 import {  Request, Response, NextFunction } from 'express';
-const Medical = require('../models/Medical')
+import authenticate from '../middleware/authenticate';
+import Medical from '../models/Medical';
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
 .post('/', authenticate, async (req:Request, res:Response, next:NextFunction) => {
-  const {type, name, phone, email, address, ownerId, petId } = req.body;
+  const {vetId, medicines, notes, nextApt, petId } = req.body;
   try {
-    const medical = await Medical.insert({ type, name, phone, email, address, ownerId, petId });
+    const medical = await Medical.insert({ vetId, medicines, notes, nextApt, petId });
     res.json(medical);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ module.exports = Router()
 })
 
 .get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
-    //for the get all medicals method the id should be the users(owner_id)
+    //for the get all medicals method the id should be the pets(pet_id)
     const { id } = req.params;
     try { 
       const medicals = await Medical.getById(id);
@@ -39,6 +39,6 @@ module.exports = Router()
   .delete('/:id', authenticate, async (req:Request, res:Response) => {
     const { id } = req.params;
 
-    const medical = await Medical.delete(id);
+    const medical = await Medical.deleteById(id);
     res.json(medical);
   });

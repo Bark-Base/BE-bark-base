@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const authenticate = require('../middleware/authenticate');
+import { Router } from 'express';
+import authenticate from '../middleware/authenticate';
 import {  Request, Response, NextFunction } from 'express';
-const Contact = require('../models/Contact')
+import Contact from '../models/Contact';
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
@@ -14,7 +14,7 @@ module.exports = Router()
     next(error);
   }
 })
-.get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
+.get('/all/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
     //for the get all contacts method the id should be the users(id)
     const { id } = req.params;
     try { 
@@ -38,6 +38,6 @@ module.exports = Router()
   .delete('/:id', authenticate, async (req:Request, res:Response) => {
     const { id } = req.params;
 
-    const contact = await Contact.delete(id);
+    const contact = await Contact.deleteById(id);
     res.json(contact);
   });

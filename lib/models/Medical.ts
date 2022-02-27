@@ -1,15 +1,15 @@
 import { pool } from '../utils/pool';
 
-module.exports = class Medical {
-  id;
-  vetId; // references contacts(contact_id) for vet
+export default class Medical {
+  medicalId;
+  vetId; 
   medicines;
   notes;
   nextApt;
-  petId; // references pets(pet_id)
+  petId; 
   
   constructor(row:any) {
-    this.id = row.medical_id;
+    this.medicalId = row.medical_id;
     this.vetId = row.vet_id;
     this.medicines = row.medicines;
     this.notes = row.notes;
@@ -18,31 +18,31 @@ module.exports = class Medical {
   
   }
 
-  static async insert({  vetId, medicines, notes,  nextApt , petId }:{  medicines:string, vetId:string, nextApt:string, petId:number, notes:string }) {
+  static async insert({  vetId, medicines, notes,  nextApt , petId }:{  medicines:string, vetId:string, nextApt:string, petId:number, notes:string }): Promise<Medical> {
     const { rows } = await pool.query(
-      'INSERT INTO medical_info ( vetId, medicines, notes, next_appt, pet_id ) VALUES ($1, $2, $3, $4, $5 ) RETURNING *;',
+      'INSERT INTO medical_info ( vet_id, medicines, notes, next_appt, pet_id ) VALUES ($1, $2, $3, $4, $5 ) RETURNING *;',
       [ vetId, medicines, notes, nextApt, petId ]
     );
-    return new (rows[0]);
+    return new Medical(rows[0]);
   }
-
-  static async getById(petId : any) {
+// this getById will return the medical record linked to this pet
+  static async getById(petId : any): Promise<Medical> {
     const { rows } = await pool.query('SELECT * FROM medical_info WHERE pet_id = $1', [petId]);
-    return rows.map((row) => new Medical(row));
+    return new Medical(rows[0]);
   }
 
-  static async updateById(id:any, { vetId, medicines, notes,  nextApt , petId}:{ medicines:any, vetId:any, notes:any, nextApt:any, petId:any}) {
+  static async updateById(medicalId:any, { vetId, medicines, notes,  nextApt , petId}:{ medicines:string, vetId:number, notes:string, nextApt:Date, petId:any}): Promise<Medical> {
     const { rows } = await pool.query(
-      'UPDATE medical_info SET vetId = $1, medicines = $2,  notes = $3, nextApt = $4, owner_id = $5, pet_id = $6, WHERE medical_id = $8 RETURNING *',
-      [ vetId, medicines, notes,  nextApt , petId, id ]
+      'UPDATE medical_info SET vet_id = $1, medicines = $2,  notes = $3, next_appt = $4, pet_id = $5 WHERE medical_id = $6 RETURNING *',
+      [ vetId, medicines, notes,  nextApt , petId, medicalId ]
     );
     return new Medical(rows[0]);
   }
 
-  static async deleteById(id: any) {
+  static async deleteById(medicalId: any): Promise<Medical | null> {
     const { rows } = await pool.query(
       'DELETE FROM medical_info WHERE medical_id = $1 RETURNING *;',
-      [id]
+      [medicalId]
     );
     if (!rows[0]) return null;
     return new Medical(rows[0]);

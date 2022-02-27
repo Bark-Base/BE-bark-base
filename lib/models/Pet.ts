@@ -1,7 +1,7 @@
 import { pool } from '../utils/pool';
 
-module.exports = class Pet {
-  id;
+export default class Pet {
+  petId;
   ownerId;
   name;
   birthday;
@@ -11,7 +11,7 @@ module.exports = class Pet {
 
 
   constructor(row: { pet_id: number; owner_id: number; name: string; birthday: any; image_url: string; medical_id: number; contacts:[], medical_info:[] }) {
-    this.id = row.pet_id;
+    this.petId = row.pet_id;
     this.ownerId = row.owner_id;
     this.name = row.name;
     this.birthday = row.birthday;
@@ -21,14 +21,14 @@ module.exports = class Pet {
     
   }
 
-  static async insert({ ownerId, name, birthday, imageUrl, }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }) {
+  static async insert({ ownerId, name, birthday, imageUrl, }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }): Promise<Pet> {
     const { rows } = await pool.query(
       'INSERT INTO pets (owner_id, name, birthday, image_url) VALUES ($1, $2, $3, $4) RETURNING *;',
       [ownerId, name, birthday, imageUrl ]
     );
     return new Pet(rows[0]);
   }
-  static async getAll(ownerId: any) {
+  static async getAll(ownerId: any): Promise<(Pet | null)[]> {
     // selects all pet_id on owner_id 
     const { rows } = await pool.query(
       `SELECT pet_id FROM pets WHERE owner_id=$1`,
@@ -37,7 +37,7 @@ module.exports = class Pet {
       // maps over pet array by owner 
     const ownersPets = rows.map((row) => new Pet(row));
     // munges previous array for pet_id
-    const ownerPetsArray = ownersPets.map((item)=> item.id);
+    const ownerPetsArray = ownersPets.map((item)=> item.petId);
     const newArr = [];
     // loops through array of pet ids and returns a new instance of Pet.getById()
     for(let petId of ownerPetsArray){
@@ -46,7 +46,7 @@ module.exports = class Pet {
     return newArr;
   }
 
-  static async getById(id:number) {
+  static async getById(id:number): Promise<Pet | null> {
     const { rows } = await pool.query(
       `SELECT pets.*,
       jsonb_agg(to_jsonb(contacts) - 'pet_id' - 'owner_id' - 'contact_id') AS contacts,
@@ -65,7 +65,7 @@ module.exports = class Pet {
     return new Pet(rows[0]);
   }
 
-  static async updateById(id:number, { name, birthday, imageUrl}:{ name:string, birthday:any, imageUrl:any}) {
+  static async updateById(id:number, { name, birthday, imageUrl}:{ name:string, birthday:any, imageUrl:any}): Promise<Pet> {
     const { rows } = await pool.query(
       'UPDATE pets SET name = $1, birthday = $2, image_url = $3 WHERE id = $4 RETURNING *',
       [ name, birthday, imageUrl, id]
@@ -73,12 +73,12 @@ module.exports = class Pet {
     return new Pet(rows[0]);
   }
 
-  static async deleteById(id: any) {
+  static async deleteById(id: any): Promise<Pet | null> {
     const { rows } = await pool.query(
       'DELETE FROM pets WHERE pet_id = $1 RETURNING *;',
       [id]
     );
     if (!rows[0]) return null;
-    return new Pet(rows[0],), { message: 'successful deletion'};
+    return new Pet(rows[0],);
   }
 };

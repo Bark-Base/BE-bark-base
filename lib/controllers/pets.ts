@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const authenticate = require('../middleware/authenticate');
+import { Router } from 'express';
+import authenticate from '../middleware/authenticate';
 import {  Request, Response, NextFunction } from 'express';
-const Pet = require('../models/Pet')
+import Pet from '../models/Pet';
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 module.exports = Router()
@@ -18,7 +18,7 @@ module.exports = Router()
 .get('/all/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
     const { id } = req.params;
     try { 
-      const pets = await Pet.getAll(id);
+      const pets = await Pet.getAll(Number(id));
       res.json(pets);
     } catch (error) {
       next(error);
@@ -27,7 +27,7 @@ module.exports = Router()
  .get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
     const { id } = req.params;
     try { 
-      const pets = await Pet.getById(id);
+      const pets = await Pet.getById(Number(id));
       res.json(pets);
     } catch (error) {
       next(error);
@@ -37,7 +37,7 @@ module.exports = Router()
     const { id } = req.params;
        
     try {
-      const pet = await Pet.updateById(id, req.body);
+      const pet = await Pet.updateById(Number(id), req.body);
       res.json(pet);
     } catch(err) {
       next(err);

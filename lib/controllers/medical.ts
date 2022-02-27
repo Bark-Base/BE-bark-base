@@ -14,11 +14,12 @@ module.exports = Router()
     next(error);
   }
 })
+
 .get('/:id', authenticate, async (req:Request, res:Response, next:NextFunction) => {
-    //for the get all medicals method the id should be the users(id)
+    //for the get all medicals method the id should be the users(owner_id)
     const { id } = req.params;
     try { 
-      const medicals = await Medical.getAll(id);
+      const medicals = await Medical.getById(id);
       res.send(medicals);
     } catch (error) {
       next(error);

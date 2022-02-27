@@ -36,7 +36,7 @@ INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('vet','bob',555-555-5555,'@gmail.com','123 fake st.',1,1);
 
 CREATE TABLE medical_info (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    medical_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     vet_id BIGINT REFERENCES contacts(contact_id),
     medicines VARCHAR(30), 
     notes VARCHAR(2000),

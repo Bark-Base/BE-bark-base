@@ -6,34 +6,34 @@ module.exports = class Pet {
   name;
   birthday;
   imageUrl;
-  medicalId;
 
-  constructor(row:any) {
-    this.id = row.id;
+
+  constructor(row: { pet_id: any; owner_id: any; name: any; birthday: any; image_url: any; medical_id: any; }) {
+    this.id = row.pet_id;
     this.ownerId = row.owner_id;
     this.name = row.name;
     this.birthday = row.birthday;
     this.imageUrl = row.image_url;
-    this.medicalId = row.medical_id;
+    
   }
 
-  static async insert({ ownerId, name, birthday, imageUrl, medicalId}:{ ownerId:number, name:string, birthday:any, imageUrl:string, medicalId:any }) {
+  static async insert({ ownerId, name, birthday, imageUrl, }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }) {
     const { rows } = await pool.query(
-      'INSERT INTO pets (ownerId, name, birthday, image_url, medical_id) VALUES ($1, $2,$3, $4, $5) RETURNING *;',
-      [ownerId, name, birthday, imageUrl, medicalId]
+      'INSERT INTO pets (owner_id, name, birthday, image_url) VALUES ($1, $2, $3, $4) RETURNING *;',
+      [ownerId, name, birthday, imageUrl ]
     );
-    return new (rows[0]);
+    return new Pet(rows[0]);
   }
 
   static async getAll(ownerId: any) {
-    const { rows } = await pool.query('SELECT * FROM Pets WHERE id=$1', [ownerId]);
+    const { rows } = await pool.query('SELECT * FROM Pets WHERE owner_id=$1', [ownerId]);
     return rows.map((row) => new Pet(row));
   }
 
-  static async getById(id:any) {
+  static async getById(id:number) {
     const { rows } = await pool.query(
-      `SELECT FROM pets
-       WHERE id=$1`,
+      `SELECT * FROM pets
+       WHERE pet_id=$1`,
       [id]
     );
 
@@ -41,9 +41,9 @@ module.exports = class Pet {
     return new Pet(rows[0]);
   }
 
-  static async updateById(id:any, { name, birthday, imageUrl}:{ name:any, birthday:any, imageUrl:any}) {
+  static async updateById(id:number, { name, birthday, imageUrl}:{ name:string, birthday:any, imageUrl:any}) {
     const { rows } = await pool.query(
-      'UPDATE pets SET name = $1, birthday = $2, imageUrl = $3 WHERE id = $4 RETURNING *',
+      'UPDATE pets SET name = $1, birthday = $2, image_url = $3 WHERE id = $4 RETURNING *',
       [ name, birthday, imageUrl, id]
     );
     return new Pet(rows[0]);
@@ -51,10 +51,10 @@ module.exports = class Pet {
 
   static async deleteById(id: any) {
     const { rows } = await pool.query(
-      'DELETE FROM pets WHERE id = $1 RETURNING *;',
+      'DELETE FROM pets WHERE pet_id = $1 RETURNING *;',
       [id]
     );
     if (!rows[0]) return null;
-    return new Pet(rows[0]);
+    return new Pet(rows[0],), { message: 'successful deletion'};
   }
 };

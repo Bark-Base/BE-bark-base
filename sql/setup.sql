@@ -23,7 +23,7 @@ INSERT INTO pets (owner_id, name, birthday, image_url)
 VALUES(1,'berlin','2022-01-01','http://www.placekitten.com');
 
 CREATE TABLE contacts (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    contact_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     type TEXT NOT NULL,
     name TEXT NOT NULL,
     phone INT,
@@ -37,7 +37,7 @@ VALUES('vet','bob',555-555-5555,'@gmail.com','123 fake st.',1,1);
 
 CREATE TABLE medical_info (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    vet_id BIGINT REFERENCES contacts(id),
+    vet_id BIGINT REFERENCES contacts(contact_id),
     medicines VARCHAR(30), 
     notes VARCHAR(2000),
     next_appt DATE,

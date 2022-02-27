@@ -6,14 +6,18 @@ module.exports = class Pet {
   name;
   birthday;
   imageUrl;
+  contacts;
+  medical;
 
 
-  constructor(row: { pet_id: any; owner_id: any; name: any; birthday: any; image_url: any; medical_id: any; }) {
+  constructor(row: { pet_id: any; owner_id: any; name: any; birthday: any; image_url: any; medical_id: any; contacts:[], medical_info:[] }) {
     this.id = row.pet_id;
     this.ownerId = row.owner_id;
     this.name = row.name;
     this.birthday = row.birthday;
     this.imageUrl = row.image_url;
+    this.contacts = row.contacts || [];
+    this.medical = row.medical_info || [];
     
   }
 
@@ -32,8 +36,16 @@ module.exports = class Pet {
 
   static async getById(id:number) {
     const { rows } = await pool.query(
-      `SELECT * FROM pets
-       WHERE pet_id=$1`,
+      `SELECT pets.*,
+      jsonb_agg(to_jsonb(contacts) - 'pet_id' - 'owner_id' - 'contact_id') AS contacts,
+      jsonb_agg(to_jsonb(medical_info) -'pet_id' - 'id' - 'vet_id') AS medical_info
+      FROM pets
+      LEFT JOIN contacts
+      ON contacts.pet_id = pets.pet_id
+      LEFT JOIN medical_info
+      ON medical_info.pet_id = pets.pet_id
+       WHERE pets.pet_id=$1
+       GROUP BY pets.pet_id`,
       [id]
     );
 

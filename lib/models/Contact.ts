@@ -1,6 +1,6 @@
 import { pool } from '../utils/pool';
 
-module.exports = class Pet {
+module.exports = class Contact {
   id;
   type;
   name;
@@ -23,15 +23,15 @@ module.exports = class Pet {
 
   static async insert({  type, name, phone,  email, address, ownerId, petId }:{ ownerId:number, name:string, type:string, email:string, address:string, petId:number, phone:any }) {
     const { rows } = await pool.query(
-      'INSERT INTO contacts ( type, name, phone, email, address, ownerId, pet_id ) VALUES ($1, $2,$3, $4, $5, $6, $7) RETURNING *;',
+      'INSERT INTO contacts ( type, name, phone, email, address, owner_id, pet_id ) VALUES ($1, $2,$3, $4, $5, $6, $7) RETURNING *;',
       [ type, name, phone,  email, address, ownerId, petId]
     );
-    return new (rows[0]);
+    return new Contact(rows[0]);
   }
 
   static async getAll(ownerId: any) {
     const { rows } = await pool.query('SELECT * FROM contacts WHERE owner_id = $1',[ownerId]);
-    return rows.map((row) => new Pet(row));
+    return rows.map((row) => new Contact(row));
   }
 
   static async updateById(id:any, { name, type, phone, email, address, ownerId, petId}:{ name:any, type:any, phone:any, email:any, address:any, ownerId:any, petId:any}) {
@@ -39,7 +39,7 @@ module.exports = class Pet {
       'UPDATE contacts SET name = $1, type = $2, phone = $3, email= $4, address = $5, owner_id = $6, pet_id = $7, WHERE contact_id = $8 RETURNING *',
       [ name, type, phone, email, address, ownerId, petId, id ]
     );
-    return new Pet(rows[0]);
+    return new Contact(rows[0]);
   }
 
   static async deleteById(id: any) {
@@ -48,6 +48,6 @@ module.exports = class Pet {
       [id]
     );
     if (!rows[0]) return null;
-    return new Pet(rows[0]);
+    return new Contact(rows[0]);
   }
 };

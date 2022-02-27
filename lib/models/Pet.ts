@@ -10,7 +10,7 @@ module.exports = class Pet {
   medical;
 
 
-  constructor(row: { pet_id: any; owner_id: any; name: any; birthday: any; image_url: any; medical_id: any; contacts:[], medical_info:[] }) {
+  constructor(row: { pet_id: number; owner_id: number; name: string; birthday: any; image_url: string; medical_id: number; contacts:[], medical_info:[] }) {
     this.id = row.pet_id;
     this.ownerId = row.owner_id;
     this.name = row.name;
@@ -30,8 +30,17 @@ module.exports = class Pet {
   }
 
   static async getAll(ownerId: any) {
-    const { rows } = await pool.query('SELECT * FROM Pets WHERE owner_id=$1', [ownerId]);
-    return rows.map((row) => new Pet(row));
+    const { rows } = await pool.query(
+      `SELECT pet_id FROM pets WHERE owner_id=$1`,
+      [ownerId]
+    );
+    const ownersPets = rows.map((row) => new Pet(row));
+    const ownerPetsArray = ownersPets.map((item)=> item.id);
+    const newArr = [];
+    for(let petId of ownerPetsArray){
+      newArr.push(await this.getById(petId));
+    }
+    return newArr;
   }
 
   static async getById(id:number) {

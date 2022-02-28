@@ -31,10 +31,10 @@ export default class Medical {
     return new Medical(rows[0]);
   }
 
-  static async updateById(medicalId:any, { vetId, medicines, notes,  nextApt , petId}:{ medicines:string, vetId:number, notes:string, nextApt:Date, petId:any}): Promise<Medical> {
+  static async updateById(medicalId:any, { vetId, medicines, notes,  nextApt }:{ medicines:string, vetId:number, notes:string, nextApt:Date }): Promise<Medical> {
     const { rows } = await pool.query(
-      'UPDATE medical_info SET vet_id = $1, medicines = $2,  notes = $3, next_appt = $4, pet_id = $5 WHERE medical_id = $6 RETURNING *',
-      [ vetId, medicines, notes,  nextApt , petId, medicalId ]
+      'UPDATE medical_info SET vet_id = $1, medicines = $2,  notes = $3, next_appt = $4 WHERE medical_id = $5 RETURNING *',
+      [ vetId, medicines, notes,  nextApt , medicalId ]
     );
     return new Medical(rows[0]);
   }

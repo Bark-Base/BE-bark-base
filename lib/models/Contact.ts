@@ -34,10 +34,10 @@ export default class Contact {
     return rows.map((row) => new Contact(row));
   }
 
-  static async updateById(contactId:any, { phone, email, address, ownerId, petId }:{ name:any, type:any, phone:any, email:any, address:any, ownerId:any, petId:any}): Promise<Contact> {
+  static async updateById(contactId:any, { phone, email, address,  petId }:{ name:any, type:any, phone:any, email:any, address:any, petId:any}): Promise<Contact> {
     const { rows } = await pool.query(
-      'UPDATE contacts SET phone = $1, email= $2, address = $3, owner_id = $4, pet_id = $5 WHERE contact_id = $6 RETURNING *',
-      [ phone, email, address, ownerId, petId, contactId ]
+      'UPDATE contacts SET phone = $1, email= $2, address = $3,  pet_id = $4 WHERE contact_id = $5 RETURNING *',
+      [ phone, email, address, , petId, contactId ]
     );
     return new Contact(rows[0]);
   }

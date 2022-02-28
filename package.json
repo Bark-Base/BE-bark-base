@@ -16,7 +16,9 @@
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
     "setup-heroku": "heroku run npm run setup-db",
-    "postbuild": "cp -r sql dist/"
+    "postbuild": "cp -r sql public dist/"
+    
+
   },
   "jest": {
     "testEnvironment": "node"

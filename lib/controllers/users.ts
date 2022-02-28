@@ -27,6 +27,7 @@ module.exports = Router()
     next(error);
   }
 })
+
 .get('/user', authenticate,  async (req:any, res:Response, next:NextFunction) => {
   try {
     const { user } = req;

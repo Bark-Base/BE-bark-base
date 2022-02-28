@@ -6,7 +6,7 @@ export default class User {
   #passwordHash;
 
   constructor(row:any) {
-    this.ownerId = row.id;
+    this.ownerId = row.owner_id;
     this.email = row.email;
     this.#passwordHash = row.password_hash;
   }

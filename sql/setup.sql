@@ -26,7 +26,7 @@ CREATE TABLE contacts (
     contact_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     type TEXT NOT NULL,
     name TEXT NOT NULL,
-    phone INT,
+    phone VARCHAR(20),
     email TEXT,
     address TEXT,
     owner_id BIGINT REFERENCES users,

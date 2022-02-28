@@ -1,11 +1,10 @@
 import  jwt  from 'jsonwebtoken';
 import {  Request, Response, NextFunction } from 'express';
 
-module.exports = async (req:any, res:Response, next:NextFunction) => {
+export default async (req:any, res:Response, next:NextFunction) => {
   try {
     const cookie:string = req.cookies[process.env.COOKIE_NAME as string];
 
-    console.log(cookie)
     // Check the httpOnly session cookie for the current user
     if (!cookie) throw new Error('You must be signed in to continue');
 

@@ -1,9 +1,9 @@
-const { Router } = require('express');
-const jwt = require('jsonwebtoken');
-const authenticate = require('../middleware/authenticate');
+import { Router } from 'express';
+import authenticate from '../middleware/authenticate';
 import {  Request, Response, NextFunction } from 'express';
-const UserService = require('../services/UserService');
-const User = require('../models/User')
+import UserService from '../services/UserService';
+import User from '../models/User';
+const jwt = require('jsonwebtoken');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 

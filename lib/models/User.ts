@@ -1,12 +1,12 @@
 import { pool } from '../utils/pool';
 
-module.exports = class User {
-  id;
+export default class User {
+  ownerId;
   email;
   #passwordHash;
 
   constructor(row:any) {
-    this.id = row.id;
+    this.ownerId = row.id;
     this.email = row.email;
     this.#passwordHash = row.password_hash;
   }
@@ -14,7 +14,7 @@ module.exports = class User {
   static async insert({ email, passwordHash }: {
     email: string;
     passwordHash: any;
-}) {
+}): Promise<User> {
     const { rows } = await pool.query(
       `
         INSERT INTO users ( email, password_hash)
@@ -25,7 +25,7 @@ module.exports = class User {
     );
     return new User(rows[0]);
   }
-  static async getByEmail(email:string) {
+  static async getByEmail(email:string): Promise<User | null> {
     const { rows } = await pool.query(
       `
           SELECT *

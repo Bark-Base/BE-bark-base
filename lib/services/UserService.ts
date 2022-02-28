@@ -1,9 +1,9 @@
 import * as bcrypt  from 'bcrypt';
+import User from '../models/User';
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
-module.exports = class UserService {
-  static async create({ email, password }: {email:string, password:any, }) {
+export default class UserService {
+  static async create({ email, password }: {email:string, password:any, }): Promise<User> {
     const passwordHash = await bcrypt.hash(
       password, 
       Number(process.env.SALT_ROUNDS)
@@ -16,7 +16,7 @@ module.exports = class UserService {
     return user;
   }
 
-  static async signIn({ email, password } : {email:string, password:string}) {
+  static async signIn({ email, password } : {email:string, password:string}): Promise<any> {
     try {
       const user = await User.getByEmail(email);
 

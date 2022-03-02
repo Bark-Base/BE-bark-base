@@ -21,7 +21,7 @@ export default class Pet {
     
   }
 
-  static async insert({ ownerId, name, birthday, imageUrl }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }): Promise<Pet> {
+  static async insert({ ownerId, name, birthday, imageUrl }:{ ownerId:number, name:string, birthday:any, imageUrl:any }): Promise<Pet> {
     const { rows } = await pool.query(
       'INSERT INTO pets (owner_id, name, birthday, image_url) VALUES ($1, $2, $3, $4) RETURNING *;',
       [ownerId, name, birthday, imageUrl ]
@@ -65,9 +65,9 @@ export default class Pet {
     return new Pet(rows[0]);
   }
 
-  static async updateById(id:number, { name, birthday, imageUrl}:{ name:string, birthday:any, imageUrl:any}): Promise<Pet> {
+  static async updateById(id:number, { name, birthday, imageUrl}:{ name:string, birthday:any, imageUrl:any}) {
     const { rows } = await pool.query(
-      'UPDATE pets SET name = $1, birthday = $2, image_url = $3 WHERE id = $4 RETURNING *',
+      'UPDATE pets SET name = $1, birthday = $2, image_url = $3 WHERE pet_id = $4 RETURNING *',
       [ name, birthday, imageUrl, id]
     );
     return new Pet(rows[0]);

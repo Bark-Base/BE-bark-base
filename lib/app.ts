@@ -3,8 +3,6 @@ import express from 'express';
 import  cookieParser  from 'cookie-parser';
 import cors from 'cors';
 import * as path from 'express';
-import { countReset } from 'console';
-
 
 const app: Application = express();
 
@@ -13,9 +11,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended : false }));
 app.use(cors({
-    origin: ['http://localhost:3000', 'localhost:3000' ],
+    origin: ['http://localhost:3000', 'localhost:3000', 'epic-fermi-d5575a.netlify.app', 'https://epic-fermi-d5575a.netlify.app/' ],
     credentials: true,
-    exposedHeaders: ['Set-Cookie']
+    methods: [ "GET", "HEAD", "PATCH", "POST", "DELETE" ],
+    exposedHeaders: ['Set-Cookie'],
+    preflightContinue: true
 }));
 
 // App routes

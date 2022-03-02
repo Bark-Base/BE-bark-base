@@ -19,7 +19,7 @@ module.exports = Router()
     const { id } = req.params;
     try { 
       const contacts = await Contact.getAll(id);
-      res.send(contacts);
+      res.json(contacts);
     } catch (error) {
       next(error);
     }

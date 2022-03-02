@@ -7,7 +7,7 @@ CREATE TABLE users (
     owner_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     password_hash TEXT NOT NULL,
     secret_hash TEXT,
-    email TEXT NOT NULL
+    email TEXT NOT NULL UNIQUE
 );
 INSERT INTO users (password_hash, secret_hash, email)
 VALUES('hashshashshsa', 'shhdhshshsh', 'danbob@gmail.com');

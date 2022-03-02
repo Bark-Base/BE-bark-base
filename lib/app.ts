@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended : false }));
 app.use(cors({
     origin: ['http://localhost:3000', 'localhost:3000' ],
     credentials: true,
-    methods: [ "GET","HEAD","PUT","PATCH","POST","DELETE" ],
+    methods: [ "GET", "HEAD", "PATCH", "POST", "DELETE" ],
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true
 }));

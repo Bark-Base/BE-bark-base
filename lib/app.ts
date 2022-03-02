@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended : false }));
 app.use(cors({
-    origin: ['http://localhost:3000', 'localhost:3000' ],
+    origin: ['http://localhost:3000', 'localhost:3000', 'epic-fermi-d5575a.netlify.app', 'https://epic-fermi-d5575a.netlify.app/' ],
     credentials: true,
     methods: [ "GET", "HEAD", "PATCH", "POST", "DELETE" ],
     exposedHeaders: ['Set-Cookie'],

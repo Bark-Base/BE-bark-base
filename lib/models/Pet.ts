@@ -21,14 +21,14 @@ export default class Pet {
     
   }
 
-  static async insert({ ownerId, name, birthday, imageUrl, }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }): Promise<Pet> {
+  static async insert({ ownerId, name, birthday, imageUrl }:{ ownerId:number, name:string, birthday:any, imageUrl:any, }): Promise<Pet> {
     const { rows } = await pool.query(
       'INSERT INTO pets (owner_id, name, birthday, image_url) VALUES ($1, $2, $3, $4) RETURNING *;',
       [ownerId, name, birthday, imageUrl ]
     );
     return new Pet(rows[0]);
   }
-  static async getAll(ownerId: any): Promise<(Pet | null)[]> {
+  static async getAll(ownerId: any) {
     // selects all pet_id on owner_id 
     const { rows } = await pool.query(
       `SELECT pet_id FROM pets WHERE owner_id=$1`,
@@ -49,7 +49,7 @@ export default class Pet {
   static async getById(id:number): Promise<Pet | null> {
     const { rows } = await pool.query(
       `SELECT pets.*,
-      jsonb_agg(to_jsonb(contacts) - 'pet_id' - 'owner_id' - 'contact_id') AS contacts,
+      jsonb_agg(to_jsonb(contacts) - 'pet_id' - 'owner_id') AS contacts,
       jsonb_agg(to_jsonb(medical_info) -'pet_id' - 'id' - 'vet_id') AS medical_info
       FROM pets
       LEFT JOIN contacts

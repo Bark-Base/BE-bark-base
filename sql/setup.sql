@@ -16,7 +16,7 @@ CREATE TABLE pets (
     pet_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     owner_id BIGINT REFERENCES users,
     name TEXT NOT NULL,
-    birthday DATE,
+    birthday VARCHAR(10),
     image_url TEXT
 );
 INSERT INTO pets (owner_id, name, birthday, image_url)

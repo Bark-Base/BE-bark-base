@@ -37,23 +37,23 @@ CREATE TABLE contacts (
     pet_id BIGINT REFERENCES pets ON DELETE CASCADE
 );
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('vet','bob','555-555-5555','sample@gmail.com','123 fake st.',1,2);
+VALUES('vet','bob','555-555-1234','sample@gmail.com','123 fake st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('trainer','fred','555-555-5555','sample@gmail.com','123 fake st.',1,2);
+VALUES('trainer','fred','111-555-5555','sample@gmail.com','123 fake st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('walker','ranger','555-555-5555','sample@gmail.com','123 fake st.',1,2);
+VALUES('walker','texas','555-867-5309','ranger@gmail.com','123 faque st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('vet','bob','555-555-5555','sample@gmail.com','123 fake st.',1,1);
+VALUES('vet','bob','555-555-5555','ample@gmail.com','123 fake st.',1,1);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('trainer','fred','555-555-5555','sample@gmail.com','123 fake st.',1,1);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('walker','ranger','555-555-5555','sample@gmail.com','123 fake st.',1,1);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('vet','bob','555-555-5555','sample@gmail.com','123 fake st.',1,3);
+VALUES('vet','bob ross','555-555-5555','simple@gmail.com','123 fake st.',1,3);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('trainer','fred','555-555-5555','sample@gmail.com','123 fake st.',1,3);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('walker','ranger','555-555-5555','sample@gmail.com','123 fake st.',1,3);
+VALUES('walker','Todd','555-555-5555','sample@gmail.com','123 fake st.',1,3);
 
 CREATE TABLE medical_info (
     medical_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

@@ -39,15 +39,21 @@ CREATE TABLE contacts (
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('vet','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('trainer','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
+VALUES('trainer','fred','555-555-5555','@gmail.com','123 fake st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('walker','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
+VALUES('walker','ranger','555-555-5555','@gmail.com','123 fake st.',1,2);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
 VALUES('vet','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('trainer','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
+VALUES('trainer','fred','555-555-5555','@gmail.com','123 fake st.',1,1);
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('walker','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
+VALUES('walker','ranger','555-555-5555','@gmail.com','123 fake st.',1,1);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('vet','bob','555-555-5555','@gmail.com','123 fake st.',1,3);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('trainer','fred','555-555-5555','@gmail.com','123 fake st.',1,3);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('walker','ranger','555-555-5555','@gmail.com','123 fake st.',1,3);
 
 CREATE TABLE medical_info (
     medical_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

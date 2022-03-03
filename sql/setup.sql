@@ -10,7 +10,7 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE
 );
 INSERT INTO users (password_hash, secret_hash, email)
-VALUES('hashshashshsa', 'shhdhshshsh', 'danbob@gmail.com');
+VALUES('$2b$10$7tLkCqYlRWdYqKT17u7HWONpM/6MnkscllP0ARhyTBAjEYPf5P3S.', 'shhdhshshsh', 'barkbase@web');
 
 CREATE TABLE pets (
     pet_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -20,7 +20,11 @@ CREATE TABLE pets (
     image_url TEXT
 );
 INSERT INTO pets (owner_id, name, birthday, image_url)
-VALUES(1,'berlin','2022-01-01','http://www.placekitten.com');
+VALUES(1,'Berlin','2022-01-01','http://www.placekitten.com');
+INSERT INTO pets (owner_id, name, birthday, image_url)
+VALUES(1,'Kyiv','2022-01-01','http://www.placekitten.com');
+INSERT INTO pets (owner_id, name, birthday, image_url)
+VALUES(1,'Vilnius','2022-01-01','http://www.placekitten.com');
 
 CREATE TABLE contacts (
     contact_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -33,7 +37,17 @@ CREATE TABLE contacts (
     pet_id BIGINT REFERENCES pets ON DELETE CASCADE
 );
 INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
-VALUES('vet','bob',555-555-5555,'@gmail.com','123 fake st.',1,1);
+VALUES('vet','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('trainer','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('walker','bob','555-555-5555','@gmail.com','123 fake st.',1,2);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('vet','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('trainer','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
+INSERT INTO contacts (type,name,phone,email,address,owner_id,pet_id)
+VALUES('walker','bob','555-555-5555','@gmail.com','123 fake st.',1,1);
 
 CREATE TABLE medical_info (
     medical_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

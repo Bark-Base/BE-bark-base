@@ -1,6 +1,6 @@
 
 **Bark Base project Endpoints**
-**User**
+**User**---
 POST: api/v1/auth
 This is the create user endpoint
 

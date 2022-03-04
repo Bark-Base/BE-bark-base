@@ -16,7 +16,7 @@ app.use(
       'http://localhost:3000',
       'localhost:3000',
       'barkbase.netlify.app',
-      'https://barkbase.netlify.app/',
+      'https://barkbase.netlify.app',
     ],
     credentials: true,
     methods: ['GET', 'HEAD', 'PATCH', 'POST', 'DELETE'],

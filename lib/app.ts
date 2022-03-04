@@ -22,6 +22,7 @@ app.use(
     methods: ['GET', 'HEAD', 'PATCH', 'POST', 'DELETE'],
     exposedHeaders: ['Set-Cookie'],
     preflightContinue: true,
+    
   })
 );
 

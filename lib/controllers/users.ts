@@ -6,6 +6,7 @@ import User from '../models/User';
 const jwt = require('jsonwebtoken');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = Router()
   .post('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -16,10 +17,10 @@ module.exports = Router()
 
       res
         .cookie(process.env.COOKIE_NAME as string, sessionToken, {
-          // secure: process.env.NODE_ENV !== 'development',
           httpOnly: true,
           maxAge: ONE_DAY,
-          // sameSite: 'none'
+          sameSite: isProduction ? 'none' : 'strict',
+          secure: isProduction,
         })
         .json({ message: 'Signed in successfully!', user });
     } catch (error) {
@@ -50,6 +51,8 @@ module.exports = Router()
         .cookie(process.env.COOKIE_NAME as string, sessionToken, {
           httpOnly: true,
           maxAge: ONE_DAY,
+          sameSite: isProduction ? 'none' : 'strict',
+          secure: isProduction,
         })
         .json({ message: 'Signed in successfully!', user });
     } catch (error) {
@@ -59,7 +62,12 @@ module.exports = Router()
 
   .delete('/session', (req: Request, res: Response) => {
     res
-      .clearCookie(process.env.COOKIE_NAME as string)
+      .clearCookie(process.env.COOKIE_NAME as string, {
+        httpOnly: true,
+        maxAge: ONE_DAY,
+        sameSite: isProduction ? 'none' : 'strict',
+        secure: isProduction,
+      })
       .json({ success: true, message: 'Signed out successfully!' });
   });
 

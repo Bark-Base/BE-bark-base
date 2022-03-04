@@ -25,8 +25,8 @@ app.use('/api/v1/contact', require('./controllers/contacts'));
 app.use('/api/v1/medical', require('./controllers/medical'));
 app.use('/api/v1/static', express.static('dist/public'))
 // Error handling & 404 middleware for when
-// a request doesn't match any app routes
 app.use(require('./middleware/not-found'));
 app.use(require('./middleware/error'));
+// a request doesn't match any app routes
 
 module.exports = app;

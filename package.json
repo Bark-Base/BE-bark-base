@@ -34,6 +34,12 @@
     "@types/supertest": "^2.0.11"
     
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
   "dependencies": {
     "eslint": "^8.7.0",
     "jest": "^27.4.7",

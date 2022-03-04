@@ -13,9 +13,10 @@ export default async (req:any, res:Response, next:NextFunction) => {
     req.user = user;
 
     next();
-  } catch (err:any) {
-    err.status = 401;
+  } catch (error:any) {
+    error.status = 401;
+    console.error(error.message)
     
-    next(err);
+    next(error);
   }
 };

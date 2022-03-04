@@ -1,8 +1,5 @@
 {
   "name": "express-template",
-  "jest": {
-        "testPathIgnorePatterns": ["dist"]
-      },
   "version": "1.0.0",
   "engines": {
     "node": "16.13.0"
@@ -38,11 +35,13 @@
     
   },
   "jest": {
+    "testPathIgnorePatterns": ["dist"],
     "moduleFileExtensions": [
       "js",
       "json",
       "ts"
-    ],
+    ]
+  },
   "dependencies": {
     "eslint": "^8.7.0",
     "jest": "^27.4.7",

@@ -5,27 +5,30 @@ export default class User {
   email;
   #passwordHash;
 
-  constructor(row:any) {
+  constructor(row: any) {
     this.ownerId = row.owner_id;
     this.email = row.email;
     this.#passwordHash = row.password_hash;
   }
 
-  static async insert({ email, passwordHash }: {
+  static async insert({
+    email,
+    passwordHash,
+  }: {
     email: string;
     passwordHash: any;
-}): Promise<User> {
+  }): Promise<User> {
     const { rows } = await pool.query(
       `
         INSERT INTO users ( email, password_hash)
         VALUES ($1, $2)
         RETURNING *
       `,
-      [ email, passwordHash ]
+      [email, passwordHash]
     );
     return new User(rows[0]);
   }
-  static async getByEmail(email:string): Promise<User | null> {
+  static async getByEmail(email: string): Promise<User | null> {
     const { rows } = await pool.query(
       `
           SELECT *
@@ -33,7 +36,7 @@ export default class User {
           WHERE email=$1`,
       [email]
     );
-    
+
     if (!rows[0]) return null;
     return new User(rows[0]);
   }
@@ -41,5 +44,4 @@ export default class User {
   get passwordHash() {
     return this.#passwordHash;
   }
-  
-};
+}

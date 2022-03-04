@@ -1,6 +1,6 @@
-import {  Request, Response } from 'express';
+import { Request, Response } from 'express';
 
-module.exports = (err:any, req:Request, res:Response) => {
+module.exports = (err: any, req: Request, res: Response) => {
   const status = err.status || 500;
   const message = err.message;
   res.status(status);

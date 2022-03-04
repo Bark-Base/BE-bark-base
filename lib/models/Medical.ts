@@ -2,39 +2,61 @@ import { pool } from '../utils/pool';
 
 export default class Medical {
   medicalId;
-  vetId; 
+  vetId;
   medicines;
   notes;
   nextApt;
-  petId; 
-  
-  constructor(row:any) {
+  petId;
+
+  constructor(row: any) {
     this.medicalId = row.medical_id;
     this.vetId = row.vet_id;
     this.medicines = row.medicines;
     this.notes = row.notes;
     this.nextApt = row.next_appt;
     this.petId = row.pet_id;
-  
   }
 
-  static async insert({  vetId, medicines, notes,  nextApt , petId }:{  medicines:string, vetId:string, nextApt:string, petId:number, notes:string }): Promise<Medical> {
+  static async insert({
+    vetId,
+    medicines,
+    notes,
+    nextApt,
+    petId,
+  }: {
+    medicines: string;
+    vetId: string;
+    nextApt: string;
+    petId: number;
+    notes: string;
+  }): Promise<Medical> {
     const { rows } = await pool.query(
       'INSERT INTO medical_info ( vet_id, medicines, notes, next_appt, pet_id ) VALUES ($1, $2, $3, $4, $5 ) RETURNING *;',
-      [ vetId, medicines, notes, nextApt, petId ]
+      [vetId, medicines, notes, nextApt, petId]
     );
     return new Medical(rows[0]);
   }
-// this getById will return the medical record linked to this pet
-  static async getById(petId : any): Promise<Medical> {
-    const { rows } = await pool.query('SELECT * FROM medical_info WHERE pet_id = $1', [petId]);
+  // this getById will return the medical record linked to this pet
+  static async getById(petId: any): Promise<Medical> {
+    const { rows } = await pool.query(
+      'SELECT * FROM medical_info WHERE pet_id = $1',
+      [petId]
+    );
     return new Medical(rows[0]);
   }
 
-  static async updateById(medicalId:any, { vetId, medicines, notes,  nextApt }:{ medicines:string, vetId:number, notes:string, nextApt:Date }): Promise<Medical> {
+  static async updateById(
+    medicalId: any,
+    {
+      vetId,
+      medicines,
+      notes,
+      nextApt,
+    }: { medicines: string; vetId: number; notes: string; nextApt: Date }
+  ): Promise<Medical> {
     const { rows } = await pool.query(
       'UPDATE medical_info SET vet_id = $1, medicines = $2,  notes = $3, next_appt = $4 WHERE medical_id = $5 RETURNING *',
-      [ vetId, medicines, notes,  nextApt , medicalId ]
+      [vetId, medicines, notes, nextApt, medicalId]
     );
     return new Medical(rows[0]);
   }
@@ -47,4 +69,4 @@ export default class Medical {
     if (!rows[0]) return null;
     return new Medical(rows[0]);
   }
-};
+}

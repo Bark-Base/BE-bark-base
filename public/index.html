@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Docs</title>
+    <link rel="stylesheet" href="index.css" />
+
+</head>
+
+<body>
+    <div style="background-color: rgba(245, 245, 220, 0.336);"></div>
+    <div style="background-color: rgba(114, 114, 113, 0.349); border: 1px solid grey;">
+        <H1>Bark Base project Endpoints</H1>
+        <section>
+            <article class="route-section">User
+                <div class="methods">POST: api/v1/auth
+                    <p>This is the create user endpoint</p>
+                    <p>Required params: email & password </p>
+                </div>
+                <div class="methods">POST: api/v1/auth/session
+                    <p>This is the login user endpoint</p>
+                    <p>Required params: email & password </p>
+                </div>
+                <div class="methods">DELETE: api/v1/auth/session
+                    <p>This is the logout user endpoint</p>
+                    <p>Required params: none-- clears auth cookie </p>
+                </div>
+                <div class="methods">GET: api/v1/auth/user
+                    <p>This is the protected endpoint that returns the user object</p>
+                    <p>Required: email & cookie </p>
+                </div>
+            </article>
+            <article class="route-section">Pet
+                <div class="methods">POST: api/v1/pet
+                    <p>This is the create pet endpoint</p>
+                    <p>Required params: ownerId, name, birthday </p>
+                    <p>Optional params: imageUrl </p>
+                    <div class="example-pet"> Pet with no contacts/medical records<br>'{
+                        "petId": "4", <br>
+                        "ownerId": "2",<br>
+                        "name": "Fido",<br>
+                        "birthday": "2022-01-01T08:00:00.000Z",<br>
+                        "imageUrl": "https://place-puppy.com/300x300",<br>
+                        "contacts": [
+                        null
+                        ],<br>
+                        "medical": [
+                        null
+                        ]<br>
+                        }'</div>
+                </div>
+                <div class="methods">GET: api/v1/pet/all/:id
+                    <p>This is the getAll pets by ownerId endpoint</p>
+                    <p>Required params: ownerId </p>
+                </div>
+                <div class="methods">GET: api/v1/pet/:id
+                    <p>This gets a pet by its pet_id</p>
+                    <p>Required params: petId </p>
+                </div>
+                <div class="methods">Patch: api/v1/pet/:id
+                    <p>This is the update endpoint for a pet</p>
+                    <p> Optional: ownerId, name, birthday, imageUrl </p>
+                    <p>Note: params missing will revert to null, control input to default to previous value or empty
+                        string</p>
+                </div>
+                <div class="methods">Delete: api/v1/pet/:id
+                    <p>This is the delete endpoint for a pet</p>
+                </div>
+            </article>
+
+            </article>
+            <article class="route-section">contact
+                <div class="methods">POST: api/v1/contact
+                    <p>This is the create contact endpoint</p>
+                    <p>Required params: type, name,ownerId, petId </p>
+                    <p>Optional params: phone, email, address, </p>
+                </div>
+                <div class="methods">GET: api/v1/contact/all/:id
+                    <p>This is the getAll contacts by ownerId endpoint</p>
+                    <p>Required params: ownerId </p>
+                </div>
+                <div class="methods">Patch: api/v1/contact/:id
+                    <p>This is the update endpoint for a contact</p>
+                    <p> Optional: phone, email, address, petId </p>
+                    <p>Note: params missing will revert to null, control input to default to previous value or empty
+                        string</p>
+                </div>
+                <div class="methods">Delete: api/v1/contact/:id
+                    <p>This is the delete endpoint for a contact</p>
+                    <p>Requires: contactId </p>
+                </div>
+            </article>
+
+            <article class="route-section">medical
+                <div class="methods">POST: api/v1/medical
+                    <p>This is the create medical endpoint</p>
+                    <p>Required params: petId</p>
+                    <p>Optional params: vetId, medicines, notes, nextApt</p>
+                </div>
+                <div class="methods">GET: api/v1/medical/:id
+                    <p>This gets the medical records with a petId</p>
+                    <p>Required params: petId </p>
+                </div>
+                <div class="methods">Patch: api/v1/medical/:id
+                    <p>This is the update endpoint for a medical record</p>
+                    <p> Optional: phone, email, address </p>
+                    <p>Note: params missing will revert to null, control input to default to previous value or empty
+                        string</p>
+                </div>
+                <div class="methods">Delete: api/v1/medical/:id
+                    <p>This is the delete endpoint for a medical</p>
+                    <p>Requires: medicalId </p>
+                </div>
+            </article>
+        </section>
+     </div>
+    <div style="background-color: rgba(245, 245, 220, 0.336);"></div>
+
+</body>
+
+</html>

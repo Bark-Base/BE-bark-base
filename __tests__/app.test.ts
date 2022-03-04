@@ -107,10 +107,8 @@ describe('user auth routes', () => {
       birthday: '123',
       imageUrl: '',
     });
-    console.log(pet);
-    const deletedPet = await agent.delete('/api/v1/pet/4');
 
-    const res = await agent.get(`/api/v1/pet/4`);
+    const deletedPet = await agent.delete('/api/v1/pet/4');
 
     expect(deletedPet.body).toEqual({
       birthday: '123',
@@ -120,6 +118,52 @@ describe('user auth routes', () => {
       name: 'bubba',
       ownerId: '2',
       petId: '4',
+    });
+  });
+
+  it('should create a contact', async () => {
+    const [agent, user] = await registerAndLogin({ ...mockUser });
+    const pet = await agent.post('/api/v1/pet/').send({
+      ownerId: user.ownerId,
+      name: 'bubba',
+      birthday: '123',
+      imageUrl: '',
+    });
+
+    const contact = await agent.post('/api/v1/contact/').send({
+      ownerId: user.ownerId,
+      type: 'vet',
+      name: 'test contact',
+      petId: '4',
+      phone: '',
+      email: '',
+    });
+
+    expect(contact.body).toEqual({
+      ownerId: user.ownerId,
+      type: 'vet',
+      name: 'test contact',
+      petId: '4',
+      phone: '',
+      email: '',
+      contactId: expect.any(String),
+    });
+    const updatedContact = await agent.patch('/api/v1/contact/10').send({
+      ownerId: user.ownerId,
+      type: 'vet',
+      name: 'test contact',
+      petId: '4',
+      phone: '12345',
+      email: '',
+    });
+    expect(updatedContact.body).toEqual({
+      ownerId: user.ownerId,
+      type: 'vet',
+      name: 'test contact',
+      petId: '4',
+      phone: '12345',
+      email: '',
+      contactId: expect.any(String),
     });
   });
 });

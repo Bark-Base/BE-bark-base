@@ -67,14 +67,12 @@ describe('user auth routes', () => {
 
   it('should create then update a pet', async () => {
     const [agent, user] = await registerAndLogin({ ...mockUser2 });
-    await agent
-      .post('/api/v1/pet/')
-      .send({
-        ownerId: user.ownerId,
-        name: 'bubba',
-        birthday: '123',
-        imageUrl: '',
-      });
+    await agent.post('/api/v1/pet/').send({
+      ownerId: user.ownerId,
+      name: 'bubba',
+      birthday: '123',
+      imageUrl: '',
+    });
     const res = await agent
       .patch('/api/v1/pet/4')
       .send({ name: 'bubba', birthday: '456', imageUrl: '' });
@@ -89,8 +87,7 @@ describe('user auth routes', () => {
       medical: [],
     });
 
-    const checkPet = await agent
-    .get('/api/v1/pet/4');
+    const checkPet = await agent.get('/api/v1/pet/4');
     expect(checkPet.body).toEqual({
       ownerId: expect.any(String),
       name: 'bubba',
@@ -101,5 +98,28 @@ describe('user auth routes', () => {
       medical: [null],
     });
   });
+  it('should delete a pet', async () => {
+    const [agent, user] = await registerAndLogin({ ...mockUser });
 
+    const pet = await agent.post('/api/v1/pet/').send({
+      ownerId: user.ownerId,
+      name: 'bubba',
+      birthday: '123',
+      imageUrl: '',
+    });
+    console.log(pet);
+    const deletedPet = await agent.delete('/api/v1/pet/4');
+
+    const res = await agent.get(`/api/v1/pet/4`);
+
+    expect(deletedPet.body).toEqual({
+      birthday: '123',
+      contacts: [],
+      imageUrl: '',
+      medical: [],
+      name: 'bubba',
+      ownerId: '2',
+      petId: '4',
+    });
+  });
 });
